@@ -1,0 +1,44 @@
+ .accelerometer-widget{
+   position: absolute;
+   top: 100px;
+   right: 100px;
+   width: 250px;
+}
+
+.dbg-input{
+   border: none;
+} 
+
+.dbg-button {
+   box-shadow: 0px 0px 5px #9CEDFF;
+   background: #1C1C1C;
+   color: #9CEDFF;
+   margin: 5px;
+}
+
+.dbg-text{
+   padding: 4px;
+   box-shadow: 0px 0px 5px #9CEDFF inset;
+   background: #1C1C1C;
+   color: #E39E1E;
+}
+
+.dbg-label{
+   color: #E39E1E;
+   text-shadow: none;
+}
+label.dbg-label{
+   float: left;
+   width: 30px;
+}
+
+.corner-all{
+   -webkit-border-radius: 3px;
+   -moz-border-radius: 3px;
+   border-radius: 3px;
+}
+.dbg-input-short{
+   width: 80px;
+}
+
+

@@ -1,5 +1,5 @@
-Debugging bridge to the Apache Cordova
-======================================
+Debugging bridge to the Apache Cordova JavaScript interface
+===========================================================
 
 Contains mock implementation of the Apache Cordova JavaScript interface to 
 ease the usage of the Cordova framework during debugging on PC Browser.

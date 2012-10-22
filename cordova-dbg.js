@@ -404,6 +404,29 @@
    
    ///////////////////////////
    
+   
+   // Geolocation
+   
+   
+   var Geolocation = function(config){
+       
+   };
+   
+   util.ext(Geolocation, {
+        getCurrentPosition: function(success, error, options){},
+        watchPosition: function(success, error, options){},
+        clearWatch: function(watchId){}
+   });
+   
+   
+   /////////////////////////////
+   
+   // Connection
+   
+   var Connection = function(config){
+        
+   };
+   
    // export to global scope
    window.accelerometer = new Accelerometer();
    window.camera = new Camera();

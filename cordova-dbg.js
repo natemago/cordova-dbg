@@ -43,6 +43,7 @@
                i++;
             }
          }
+      }
    };
    
    
@@ -76,7 +77,7 @@
       this.step = 0.1;
    };
    
-   utils.ext(Accelerometer, {
+   util.ext(Accelerometer, {
       getCurrentAcceleration: function(success, error){
          this.__callAcc(success, error);
       },
@@ -254,7 +255,7 @@
     };
 
    
-   utils.ext(Camera, {
+   util.ext(Camera, {
       getPicture: function(success, error, opt){
          opt = opt || {};
          
@@ -409,4 +410,4 @@
    
    
    
-})(jQuery, and);
+})(jQuery);

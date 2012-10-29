@@ -55,12 +55,63 @@
       var self = this;
       
       var m = [
-         '<div class="widget-wrapper corner-all">',
+         '<div class="widget-wrapper corner-all ',(cfg.extraClass || ''),'">',
             '',
          '</div>'
       ].join('');
       
+      this.el = $(m)[0];
+      $(this.placeholder).append(this.el);
+      
+      
+      var events = {};
+      
+      this.on = function(name, callback){
+         var es = events[name] || [];
+         var self = this;
+         var wrapper = function(){
+            var args = Array.prototype.splice.call(arguments, 0, arguments.length);
+            callback.apply(self, [self].concat(args));
+         };
+         
+         es.push({
+            callback: callback,
+            wrapper: wrapper
+         });
+         events[name] = es;
+         $(this.el).bind(name, wrapper);
+      };
+      
+      this.removeListener = function(name, callback){
+         var es = events[name];
+         if(es){
+            if(callback){
+               util.each(events, function(i, r){
+                  if(r.callback == callback){
+                     $(this.el).unbind(name, r.wrapper);
+                     return false;
+                  }
+               }, this);
+            }else{
+               $(this.el).unbind(name);
+            }
+         }
+      };
+      
+      this.trigger = function(){
+         var name = arguments[0];
+         if(name && arguments.length){
+            var args = Array.prototype.splice.call(arguments, 1, arguments.length-1);
+            $(this.el).trigger(name, args);
+         }
+      };
+      
+      this.init();
    };
+   
+   util.ext(Widget, {
+      init: function(){}
+   });
    
    
    var __Cordova = {};

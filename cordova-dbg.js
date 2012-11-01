@@ -478,10 +478,59 @@
         
    };
    
+   
+   ////////////////////////////
+   
+   // Storage
+   
+   var SQLTransaction = function(config){
+      
+   };
+   util.ext(SQLTransaction, {
+      executeSql: function(){
+         var sql = arguments[0];
+         var errInd = typeof(arguments[1]) == 'function' ? 1 : 2;
+         var params = errInd == 1 ? [] : arguments[1];
+         var error = arguments[errInd];
+         var success = arguments[errInd+1];
+         if(success){
+            success.call(this);
+         }
+      }
+   });
+   
+   
+   var Database = function(config){
+      util.ext(this, config);
+      
+   };
+   util.ext(Database, {
+      transaction: function(txCallback, error, success){
+         var tx = new SQLTransaction({});
+         if(success){
+            success.call(this, tx);
+         }
+      },
+      changeVersion: function(oldVersion, newVersion){
+         
+      }
+   });
+   
+   Database.openDatabase = function(database_name, database_version, database_displayname, database_size){
+      return new Database({
+         database_name: database_name, 
+         database_version: database_version, 
+         database_displayname: database_displayname, 
+         database_size: database_size
+      });
+   };
+   
+   
    // export to global scope
    window.accelerometer = new Accelerometer();
    window.camera = new Camera();
    
+   window.openDatabase = Database.openDatabase;
    
    
 })(jQuery);

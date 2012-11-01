@@ -551,6 +551,8 @@
    
    window.openDatabase = Database.openDatabase;
    window.device = DEVICE;
-   window.connection = new Connection({});
+   navigator.network = window.network = {
+      connection: new Connection({})
+   };
    
 })(jQuery);

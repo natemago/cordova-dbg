@@ -388,7 +388,7 @@
                         '</span>',
                      '</div>',
                      '<div>',
-                        '<label class="dbg-label">PopOver - x: </label>',
+                        '<label class=data"dbg-label">PopOver - x: </label>',
                         '<span class="dbg-value">',
                          opt.popoverOptions.x,
                         '</span>',
@@ -526,11 +526,23 @@
    };
    
    
+   ///////////////////////
+   
+   // Device object
+   var DEVICE = {
+      name: 'Passion', // (Nexus One code name)
+      cordova: "2.1",
+      platform: 'Android',
+      uuid: '2000000103050709',
+      version: "2.3.3"
+      
+   };
+   
    // export to global scope
    window.accelerometer = new Accelerometer();
    window.camera = new Camera();
    
    window.openDatabase = Database.openDatabase;
-   
+   window.device = DEVICE;
    
 })(jQuery);

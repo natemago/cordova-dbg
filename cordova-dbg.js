@@ -43,7 +43,10 @@
                i++;
             }
          }
-      }
+      },
+      isMobilePlatform: function(){
+		 return (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));
+	  }
    };
    
    
@@ -490,18 +493,34 @@
    
    // Storage
    
+   
+   var SQLResultSetRowList = function(data){
+	   var rows = [].concat(data || []);
+	   this.item = function(i){
+		   return rows[i];
+	   }
+	   this.length = rows.length;
+   };
+   
+   var SQLResultSet = function(insertId, affected, rsRowList){
+	   this.insertId = insertId || 0;
+	   this.rowsAffected = affected || 0;
+	   this.resultSet = rsRowList || new SQLResultSetRowList([]);
+   };
+   
+   
    var SQLTransaction = function(config){
       
    };
    util.ext(SQLTransaction, {
       executeSql: function(){
          var sql = arguments[0];
-         var errInd = typeof(arguments[1]) == 'function' ? 1 : 2;
-         var params = errInd == 1 ? [] : arguments[1];
-         var error = arguments[errInd];
-         var success = arguments[errInd+1];
+         var succId = typeof(arguments[1]) == 'function' ? 1 : 2;
+         var params = succId == 1 ? [] : arguments[1];
+         var success = arguments[succId];
+         var error = arguments[succId+1];
          if(success){
-            success.call(this);
+            success.call(this, this, new SQLResultSet());
          }
       }
    });
@@ -515,6 +534,7 @@
       transaction: function(txCallback, error, success){
          var tx = new SQLTransaction({});
          if(success){
+        	txCallback.call(this, tx);
             success.call(this, tx);
          }
       },
@@ -546,13 +566,15 @@
    };
    
    // export to global scope
-   window.accelerometer = new Accelerometer();
-   window.camera = new Camera();
-   
-   window.openDatabase = Database.openDatabase;
-   window.device = DEVICE;
-   navigator.network = window.network = {
-      connection: new Connection({})
-   };
-   
+   // only if in browser PC
+   if(!util.isMobilePlatform()){
+	   window.accelerometer = new Accelerometer();
+	   window.camera = new Camera();
+	   
+	   window.openDatabase = Database.openDatabase;
+	   window.device = DEVICE;
+	   navigator.network = window.network = {
+	      connection: new Connection({})
+	   };
+   }
 })(jQuery);

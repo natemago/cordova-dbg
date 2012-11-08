@@ -494,7 +494,7 @@
    // Storage
    
    
-   var SQLResultSetRowList = function(data){
+   var SQLResultSetList = function(data){
 	   var rows = [].concat(data || []);
 	   this.item = function(i){
 		   return rows[i];
@@ -504,8 +504,8 @@
    
    var SQLResultSet = function(insertId, affected, rsRowList){
 	   this.insertId = insertId || 0;
+	   this.rows = rsRowList || new SQLResultSetList([]);
 	   this.rowsAffected = affected || 0;
-	   this.resultSet = rsRowList || new SQLResultSetRowList([]);
    };
    
    
@@ -576,5 +576,6 @@
 	   navigator.network = window.network = {
 	      connection: new Connection({})
 	   };
+	   navigator.connection = navigator.network.connection;
    }
 })(jQuery);

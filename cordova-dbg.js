@@ -577,5 +577,6 @@
 	      connection: new Connection({})
 	   };
 	   navigator.connection = navigator.network.connection;
+	   window.Connection = Connection;
    }
 })(jQuery);

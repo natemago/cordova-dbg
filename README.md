@@ -10,15 +10,15 @@ How to use
 ===========
 
 Drop the following snippet in your main HTML page:
-<pre>
-   &lt;link rel="stylesheet" href="lib/debug/css/dbg.css"/>
-   &lt;link rel="stylesheet" href="lib/debug/css/widget.css"/>
-      
-   &lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js">&lt;/script>
-   &lt;script type="text/javascript" src="lib/debug/cordova-dbg.js">&lt;/script>
-</pre>
+
+    <link rel="stylesheet" href="lib/debug/css/dbg.css"/>
+    <link rel="stylesheet" href="lib/debug/css/widget.css"/>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/debug/cordova-dbg.js"></script>
+
 and you're ready to go. You'll be presented with Appropriate widgets to control
 the inputs of the various devices (such as the Accelerometer, the Camera etc..).
+
 *Remember to comment out the original import of cordova.js file, since it may
 conflict with the debugging implementation*
 

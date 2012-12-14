@@ -242,7 +242,7 @@
    
    var Camera = function(config){
       config = config || {};
-      this.imagePath = config.imagePath || 'lib/debug/img/dbg-image';
+      this.imagePath = config.imagePath || 'img/dbg-image';
       this.simulateError = config.simulateError;
    };
    
@@ -312,6 +312,7 @@
    util.ext(Camera, {
       getPicture: function(success, error, opt){
          opt = opt || {};
+         var self = this;
          
          var defaults = {
             quality : 75, 
@@ -340,7 +341,7 @@
          
          var displayCameraConfirm = function(data, isUrl){
             var m = [
-               '<div class="">',
+               '<div class="widget-wrapper camera-wrapper corner-all">',
                   '<div class="">',
                      '<div>',
                         '<label class="dbg-label">Quality: </label>',
@@ -350,7 +351,7 @@
                      '</div>',
                      '<div>',
                         '<label class="dbg-label">Destination Type: </label>',
-                        '<span class="dbg-value">',
+                        '<span class="dbg-value">&nbsp;',
                         Camera.DestinationType[opt.destinationType],
                         '</span>',
                      '</div>',
@@ -374,13 +375,13 @@
                      '</div>',
                      '<div>',
                         '<label class="dbg-label">Width: </label>',
-                        '<span class="dbg-value">',
+                        '<span class="dbg-value">&nbsp;',
                          opt.width,
                         '</span>',
                      '</div>',
                      '<div>',
                         '<label class="dbg-label">Height: </label>',
-                        '<span class="dbg-value">',
+                        '<span class="dbg-value">&nbsp;',
                         opt.height,
                         '</span>',
                      '</div>',
@@ -391,7 +392,7 @@
                         '</span>',
                      '</div>',
                      '<div>',
-                        '<label class=data"dbg-label">PopOver - x: </label>',
+                        '<label class="dbg-label">PopOver - x: </label>',
                         '<span class="dbg-value">',
                          opt.popoverOptions.x,
                         '</span>',
@@ -436,19 +437,52 @@
                            ].join('') ),
                      '</div>',
                   '</div>',
-                  '<div class="">',
+                  '<div class="camera-controls">',
+                    '<input type="button" value="Take Photo" class="take-photo"/>',
+                    '<input type="button" value="Cancel" class="cancel-photo"/>',
                   '</div>',
                '</div>'
             ].join('\n');
             console.log(m);
-            
+            if(!self.camera_in_focus){
+                var el = $(m)[0];
+                $('.take-photo', el).click(function(){
+                    if(success){
+                        success.call(self, data);
+                    }
+                    $(el).remove();
+                    self.camera_in_focus = false;
+                });
+                $('.cancel-photo',el).click(function(){
+                    if(error){
+                        error.call(self, 'camera-canceled');
+                    }
+                    $(el).remove();
+                    self.camera_in_focus = false;
+                });
+                $(document.body).append(el);
+            }else{
+                if(error){
+                    error.call(self, 'camera-in-focus');
+                }
+            }
          };
+         
+         
+         
          
          if(opt.destinationType == Camera.DestinationType.DATA_URL){
             console.log('Requesting: ', imgUrl);
-            $.get(imgUrl, function(data){
-               displayCameraConfirm(data,false);
+            $.ajax({
+                success: function(data){
+                    displayCameraConfirm(data,false);
+                },
+                url: imgUrl,
+                dataType: 'text'
             });
+            //$.get(imgUrl, function(data){
+               
+            //});
          }else{
             displayCameraConfirm('',true);
          }
